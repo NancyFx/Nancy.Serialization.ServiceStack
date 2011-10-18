@@ -48,7 +48,7 @@ task :publish => [:compile] do
     Dir.mkdir(OUTPUT)
     Dir.mkdir("#{OUTPUT}/binaries")
 
-    FileUtils.cp_r FileList["src/**/#{CONFIGURATION}/*.dll", "src/**/#{CONFIGURATION}/*.pdb"].exclude(/obj\//).exclude(/.Tests/), "#{OUTPUT}/binaries"
+    FileUtils.cp_r FileList["src/Nancy.Serializers.Json.ServiceStack/**/#{CONFIGURATION}/*.dll", "src/Nancy.Serializers.Json.ServiceStack/**/#{CONFIGURATION}/*.pdb"].exclude(/obj\//).exclude(/.Tests/), "#{OUTPUT}/binaries"
 end
 
 desc "Zips up the built binaries for easy distribution"
@@ -68,7 +68,7 @@ task :nuget_package => [:publish] do
 
     # Copy all project *.nuspec to nuget build folder before editing
     FileUtils.cp_r nuspecs, "#{OUTPUT}/nuget"
-    nuspecs = FileList["#{OUTPUT}/nuget/nancy.bootstrappers.unity.nuspec"]
+    nuspecs = FileList["#{OUTPUT}/nuget/Nancy.Serializers.Json.ServiceStack.nuspec"]
 
     # Update the copied *.nuspec files to correct version numbers and other common values
     nuspecs.each do |nuspec|
