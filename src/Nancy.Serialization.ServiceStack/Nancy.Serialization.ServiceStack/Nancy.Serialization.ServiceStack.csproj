@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\dependencies\Nancy\src\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Helpers.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceStackBodyDeserializer.cs" />
     <Compile Include="ServiceStackJsonSerializer.cs" />
   </ItemGroup>
