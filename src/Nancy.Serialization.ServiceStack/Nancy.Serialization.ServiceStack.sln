@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Serializers.Json.ServiceStack", "Nancy.Serializers.Json.ServiceStack\Nancy.Serializers.Json.ServiceStack.csproj", "{9969B6CD-C19D-435F-A280-147331CCAF18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Serialization.ServiceStack", "Nancy.Serialization.ServiceStack\Nancy.Serialization.ServiceStack.csproj", "{9969B6CD-C19D-435F-A280-147331CCAF18}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{39E172B4-AE7F-4981-9204-3F42FC2F7F19}"
 EndProject

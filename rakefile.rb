@@ -8,7 +8,7 @@ NANCY_VERSION = ""
 OUTPUT = "build"
 CONFIGURATION = 'Release'
 SHARED_ASSEMBLY_INFO = 'dependencies/Nancy/src/SharedAssemblyInfo.cs'
-SOLUTION_FILE = 'src/Nancy.Serializers.Json.ServiceStack/Nancy.Serializers.Json.ServiceStack.sln'
+SOLUTION_FILE = 'src/Nancy.Serialization.ServiceStack/Nancy.Serialization.ServiceStack.sln'
 
 Albacore.configure do |config|
     config.log_level = :verbose
@@ -29,8 +29,8 @@ assemblyinfo :version => [:clean] do |asm|
 
     asm.version = NANCY_VERSION
     asm.company_name = "Nancy"
-    asm.product_name = "Nancy.Serializers.Json.ServiceStack"
-    asm.title = "Nancy.Serializers.Json.ServiceStack"
+    asm.product_name = "Nancy.Serialization.ServiceStack"
+    asm.title = "Nancy.Serialization.ServiceStack"
     asm.description = "Provides JSON (de)serialization support using ServiceStack.Text."
     asm.copyright = "Copyright (C) Andreas Hakansson, Steven Robbins and contributors"
     asm.output_file = SHARED_ASSEMBLY_INFO
@@ -48,7 +48,7 @@ task :publish => [:compile] do
     Dir.mkdir(OUTPUT)
     Dir.mkdir("#{OUTPUT}/binaries")
 
-    FileUtils.cp_r FileList["src/Nancy.Serializers.Json.ServiceStack/**/#{CONFIGURATION}/*.dll", "src/Nancy.Serializers.Json.ServiceStack/**/#{CONFIGURATION}/*.pdb"].exclude(/obj\//).exclude(/.Tests/), "#{OUTPUT}/binaries"
+    FileUtils.cp_r FileList["src/Nancy.Serialization.ServiceStack/**/#{CONFIGURATION}/*.dll", "src/Nancy.Serialization.ServiceStack/**/#{CONFIGURATION}/*.pdb"].exclude(/obj\//).exclude(/.Tests/), "#{OUTPUT}/binaries"
 end
 
 desc "Zips up the built binaries for easy distribution"
@@ -56,19 +56,19 @@ zip :package => [:publish] do |zip|
     Dir.mkdir("#{OUTPUT}/packages")
 
     zip.directories_to_zip "#{OUTPUT}/binaries"
-    zip.output_file = "Nancy.Serializers.Json.ServiceStack-Latest.zip"
+    zip.output_file = "Nancy.Serialization.ServiceStack-Latest.zip"
     zip.output_path = "#{OUTPUT}/packages"
 end
 
 desc "Generates NuGet packages for each project that contains a nuspec"
 task :nuget_package => [:publish] do
     Dir.mkdir("#{OUTPUT}/nuget")
-    nuspecs = FileList["src/Nancy.Serializers.Json.ServiceStack/Nancy.Serializers.Json.ServiceStack/*.nuspec"]
+    nuspecs = FileList["src/Nancy.Serialization.ServiceStack/Nancy.Serialization.ServiceStack/*.nuspec"]
     root = File.dirname(__FILE__)
 
     # Copy all project *.nuspec to nuget build folder before editing
     FileUtils.cp_r nuspecs, "#{OUTPUT}/nuget"
-    nuspecs = FileList["#{OUTPUT}/nuget/Nancy.Serializers.Json.ServiceStack.nuspec"]
+    nuspecs = FileList["#{OUTPUT}/nuget/Nancy.Serialization.ServiceStack.nuspec"]
 
     # Update the copied *.nuspec files to correct version numbers and other common values
     nuspecs.each do |nuspec|
@@ -83,7 +83,7 @@ task :nuget_package => [:publish] do
             # Override common values
             xml.root.elements["metadata/authors"].text = "Andreas Håkansson, Steven Robbins and contributors"
             xml.root.elements["metadata/summary"].text = "Nancy is a lightweight web framework for the .Net platform, inspired by Sinatra. Nancy aim at delivering a low ceremony approach to building light, fast web applications."
-            xml.root.elements["metadata/licenseUrl"].text = "https://github.com/NancyFx/Nancy.Serializers.Json.ServiceStack/blob/master/license.txt"
+            xml.root.elements["metadata/licenseUrl"].text = "https://github.com/NancyFx/Nancy.Serialization.ServiceStack/blob/master/license.txt"
             xml.root.elements["metadata/projectUrl"].text = "http://nancyfx.org"
         end
     end
@@ -100,7 +100,7 @@ task :nuget_package => [:publish] do
 end
 
 desc "Pushes the nuget packages in the nuget folder up to the nuget gallary and symbolsource.org. Also publishes the packages into the feeds."
-task :nuget_publish do
+task :nuget_publish, :api_key do |task, args|
     nupkgs = FileList["#{OUTPUT}/nuget/*#{NANCY_VERSION}.nupkg"]
     nupkgs.each do |nupkg| 
         puts "Pushing #{nupkg}"
@@ -140,5 +140,5 @@ def get_assembly_version(file)
     end
   end
 
-  return ''
+  ''
 end

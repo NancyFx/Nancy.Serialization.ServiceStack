@@ -8,8 +8,8 @@
     <ProjectGuid>{9969B6CD-C19D-435F-A280-147331CCAF18}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nancy.Serializers.Json.ServiceStack</RootNamespace>
-    <AssemblyName>Nancy.Serializers.Json.ServiceStack</AssemblyName>
+    <RootNamespace>Nancy.Serialization.ServiceStack</RootNamespace>
+    <AssemblyName>Nancy.Serialization.ServiceStack</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
