@@ -51,6 +51,10 @@ task :publish => [:compile] do
     FileUtils.cp_r FileList["src/Nancy.Serialization.ServiceStack/**/#{CONFIGURATION}/*.dll", "src/Nancy.Serialization.ServiceStack/**/#{CONFIGURATION}/*.pdb"].exclude(/obj\//).exclude(/.Tests/), "#{OUTPUT}/binaries"
 end
 
+task :xunit => :compile do
+  puts "No tests"
+end
+
 desc "Zips up the built binaries for easy distribution"
 zip :package => [:publish] do |zip|
     Dir.mkdir("#{OUTPUT}/packages")
