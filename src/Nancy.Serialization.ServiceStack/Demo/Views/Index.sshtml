@@ -22,6 +22,20 @@
                      alert("Response:\n" + data);
                  }
              });
+
+             var dat = "{\"id\":1,\"name\":\"fenella\",\"age\":87,\"location\":\"Spout Hall\"}";
+
+			 alert("POSTing the following data to /json/2:\n\n" + dat);
+
+			 $.ajax({
+                 type: "POST",
+                 url: "/json/2",
+                 contentType: "application/json",
+                 data: dat,
+                 success: function (data) {
+                     alert("Response:\n" + data);
+                 }
+             });
 		}
 	</script>
 </head>
