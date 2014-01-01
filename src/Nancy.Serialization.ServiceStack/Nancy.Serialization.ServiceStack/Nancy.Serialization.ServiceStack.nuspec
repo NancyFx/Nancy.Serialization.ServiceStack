@@ -14,7 +14,7 @@
     <projectUrl>http://nancyfx.org</projectUrl>
     <dependencies>
       <dependency id="Nancy" />
-      <dependency id="ServiceStack.Text" version="3.9.5" />
+      <dependency id="ServiceStack.Text" version="[3.9.5,4)" />
     </dependencies>
     <tags>Nancy Json ServiceStack</tags>
   </metadata>
