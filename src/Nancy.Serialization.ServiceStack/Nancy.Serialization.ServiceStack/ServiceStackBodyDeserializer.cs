@@ -32,6 +32,10 @@
         public object Deserialize(string contentType, Stream bodyStream, BindingContext context)
         {
             var deserializedObject = JsonSerializer.DeserializeFromStream(context.DestinationType, bodyStream);
+            if (deserializedObject == null)
+            {
+                return null;
+            }
 
             if (context.DestinationType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Except(context.ValidModelProperties).Any())
             {
