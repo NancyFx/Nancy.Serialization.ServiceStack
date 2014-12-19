@@ -37,7 +37,15 @@
                 return null;
             }
 
-            if (context.DestinationType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Except(context.ValidModelProperties).Any())
+            var properties =
+                context.DestinationType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Select(p => new BindingMemberInfo(p));
+
+            var fields =
+                context.DestinationType.GetFields(BindingFlags.Public | BindingFlags.Instance)
+                    .Select(p => new BindingMemberInfo(p));
+
+            if (properties.Concat(fields).Except(context.ValidModelBindingMembers).Any())
             {
                 return this.CreateObjectWithBlacklistExcluded(context, deserializedObject);
             }
@@ -47,9 +55,9 @@
 
         private object CreateObjectWithBlacklistExcluded(BindingContext context, object deserializedObject)
         {
-            var returnObject = Activator.CreateInstance(context.DestinationType);
+            var returnObject = Activator.CreateInstance(context.DestinationType, true);
 
-            foreach (var property in context.ValidModelProperties)
+            foreach (var property in context.ValidModelBindingMembers)
             {
                 this.CopyPropertyValue(property, deserializedObject, returnObject);
             }
@@ -57,9 +65,9 @@
             return returnObject;
         }
 
-        private void CopyPropertyValue(PropertyInfo property, object sourceObject, object destinationObject)
+        private void CopyPropertyValue(BindingMemberInfo property, object sourceObject, object destinationObject)
         {
-            property.SetValue(destinationObject, property.GetValue(sourceObject, null), null);
+            property.SetValue(destinationObject, property.GetValue(sourceObject));
         }
     }
 }
