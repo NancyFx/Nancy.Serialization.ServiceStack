@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Reflection;
 
-    using Nancy.ModelBinding;
+    using ModelBinding;
 
     using global::ServiceStack.Text;
 
@@ -37,9 +37,17 @@
                 return null;
             }
 
-            if (context.DestinationType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Except(context.ValidModelProperties).Any())
+            var properties = context.DestinationType
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Select(p => new BindingMemberInfo(p));
+
+            var fields = context.DestinationType
+                .GetFields(BindingFlags.Public | BindingFlags.Instance)
+                .Select(f => new BindingMemberInfo(f));
+
+            if (properties.Concat(fields).Except(context.ValidModelBindingMembers).Any())
             {
-                return this.CreateObjectWithBlacklistExcluded(context, deserializedObject);
+                return CreateObjectWithBlacklistExcluded(context, deserializedObject);
             }
 
             return deserializedObject;
@@ -49,17 +57,17 @@
         {
             var returnObject = Activator.CreateInstance(context.DestinationType);
 
-            foreach (var property in context.ValidModelProperties)
+            foreach (var member in context.ValidModelBindingMembers)
             {
-                this.CopyPropertyValue(property, deserializedObject, returnObject);
+                CopyPropertyValue(member, deserializedObject, returnObject);
             }
 
             return returnObject;
         }
 
-        private void CopyPropertyValue(PropertyInfo property, object sourceObject, object destinationObject)
+        private static void CopyPropertyValue(BindingMemberInfo member, object sourceObject, object destinationObject)
         {
-            property.SetValue(destinationObject, property.GetValue(sourceObject, null), null);
+            member.SetValue(destinationObject, member.GetValue(sourceObject));
         }
     }
 }
