@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Reflection;
 
-    using ModelBinding;
+    using Nancy.ModelBinding;
 
     using global::ServiceStack.Text;
 
@@ -37,17 +37,17 @@
                 return null;
             }
 
-            var properties = context.DestinationType
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Select(p => new BindingMemberInfo(p));
+            var properties =
+                context.DestinationType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Select(p => new BindingMemberInfo(p));
 
-            var fields = context.DestinationType
-                .GetFields(BindingFlags.Public | BindingFlags.Instance)
-                .Select(f => new BindingMemberInfo(f));
+            var fields =
+                context.DestinationType.GetFields(BindingFlags.Public | BindingFlags.Instance)
+                    .Select(p => new BindingMemberInfo(p));
 
             if (properties.Concat(fields).Except(context.ValidModelBindingMembers).Any())
             {
-                return CreateObjectWithBlacklistExcluded(context, deserializedObject);
+                return this.CreateObjectWithBlacklistExcluded(context, deserializedObject);
             }
 
             return deserializedObject;
@@ -55,19 +55,19 @@
 
         private object CreateObjectWithBlacklistExcluded(BindingContext context, object deserializedObject)
         {
-            var returnObject = Activator.CreateInstance(context.DestinationType);
+            var returnObject = Activator.CreateInstance(context.DestinationType, true);
 
-            foreach (var member in context.ValidModelBindingMembers)
+            foreach (var property in context.ValidModelBindingMembers)
             {
-                CopyPropertyValue(member, deserializedObject, returnObject);
+                this.CopyPropertyValue(property, deserializedObject, returnObject);
             }
 
             return returnObject;
         }
 
-        private static void CopyPropertyValue(BindingMemberInfo member, object sourceObject, object destinationObject)
+        private void CopyPropertyValue(BindingMemberInfo property, object sourceObject, object destinationObject)
         {
-            member.SetValue(destinationObject, member.GetValue(sourceObject));
+            property.SetValue(destinationObject, property.GetValue(sourceObject));
         }
     }
 }
