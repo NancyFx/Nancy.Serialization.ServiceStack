@@ -1,6 +1,7 @@
 ﻿namespace Nancy.Serializers.Json.ServiceStack
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -37,13 +38,32 @@
                 return null;
             }
 
-            var properties =
-                context.DestinationType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Select(p => new BindingMemberInfo(p));
+            IEnumerable<BindingMemberInfo> properties = Enumerable.Empty<BindingMemberInfo>();
+            IEnumerable<BindingMemberInfo> fields = Enumerable.Empty<BindingMemberInfo>();
 
-            var fields =
-                context.DestinationType.GetFields(BindingFlags.Public | BindingFlags.Instance)
-                    .Select(p => new BindingMemberInfo(p));
+            if (context.DestinationType.IsGenericType())
+            {
+                var genericType = context.DestinationType.GetGenericArguments().FirstOrDefault();
+
+                properties =
+                    genericType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                        .Select(p => new BindingMemberInfo(p));
+
+                fields =
+                    genericType.GetFields(BindingFlags.Public | BindingFlags.Instance)
+                        .Select(p => new BindingMemberInfo(p));
+            }
+            else
+            {
+                properties =
+                    context.DestinationType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                        .Select(p => new BindingMemberInfo(p));
+
+                fields =
+                   context.DestinationType.GetFields(BindingFlags.Public | BindingFlags.Instance)
+                       .Select(p => new BindingMemberInfo(p));
+            }
+
 
             if (properties.Concat(fields).Except(context.ValidModelBindingMembers).Any())
             {
