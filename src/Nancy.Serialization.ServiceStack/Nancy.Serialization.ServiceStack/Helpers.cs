@@ -1,4 +1,4 @@
-﻿namespace Nancy.Serializers.Json.ServiceStack
+﻿namespace Nancy.Serialization.ServiceStack
 {
     using System;
 

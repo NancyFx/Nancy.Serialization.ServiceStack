@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Demo</RootNamespace>
     <AssemblyName>Demo</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -24,6 +24,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,24 +44,24 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
@@ -70,25 +73,26 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DemoModel.cs" />
     <Compile Include="DemoModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Views\Index.sshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\dependencies\Nancy\src\Nancy.Hosting.Aspnet\Nancy.Hosting.Aspnet.csproj">
-      <Project>{15B7F794-0BB2-4B66-AD78-4A951F1209B2}</Project>
+      <Project>{15b7f794-0bb2-4b66-ad78-4a951f1209b2}</Project>
       <Name>Nancy.Hosting.Aspnet</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\dependencies\Nancy\src\Nancy\Nancy.csproj">
-      <Project>{34576216-0DCA-4B0F-A0DC-9075E75A676F}</Project>
+      <Project>{34576216-0dca-4b0f-a0dc-9075e75a676f}</Project>
       <Name>Nancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nancy.Serialization.ServiceStack\Nancy.Serialization.ServiceStack.csproj">
-      <Project>{9969B6CD-C19D-435F-A280-147331CCAF18}</Project>
-      <Name>Nancy.Serializers.Json.ServiceStack</Name>
+      <Project>{9969b6cd-c19d-435f-a280-147331ccaf18}</Project>
+      <Name>Nancy.Serialization.ServiceStack</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Views\Index.sshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
