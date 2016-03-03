@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Serialization.ServiceStack", "Nancy.Serialization.ServiceStack\Nancy.Serialization.ServiceStack.csproj", "{9969B6CD-C19D-435F-A280-147331CCAF18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy", "..\..\dependencies\Nancy\src\Nancy\Nancy.csproj", "{34576216-0DCA-4B0F-A0DC-9075E75A676F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy", "..\..\dependencies\Nancy\src\Nancy.MSBuild\Nancy.csproj", "{34576216-0DCA-4B0F-A0DC-9075E75A676F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Hosting.Aspnet", "..\..\dependencies\Nancy\src\Nancy.Hosting.Aspnet\Nancy.Hosting.Aspnet.csproj", "{15B7F794-0BB2-4B66-AD78-4A951F1209B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Hosting.Aspnet", "..\..\dependencies\Nancy\src\Nancy.Hosting.Aspnet.MSBuild\Nancy.Hosting.Aspnet.csproj", "{15B7F794-0BB2-4B66-AD78-4A951F1209B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{39E172B4-AE7F-4981-9204-3F42FC2F7F19}"
 EndProject
