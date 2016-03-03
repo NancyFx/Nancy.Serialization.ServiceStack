@@ -3,7 +3,7 @@
     using Nancy;
     using Nancy.ModelBinding;
 
-    public class DemoModule : NancyModule
+    public class DemoModule : LegacyNancyModule
     {
         public DemoModule()
         {
