@@ -49,7 +49,7 @@ task :publish => [:compile] do
     Dir.mkdir(OUTPUT)
     Dir.mkdir("#{OUTPUT}/binaries")
 
-    FileUtils.cp_r FileList["src/Nancy.Serialization.ServiceStack/**/#{CONFIGURATION}/*.dll", "src/Nancy.Serialization.ServiceStack/**/#{CONFIGURATION}/*.pdb"].exclude(/obj\//).exclude(/.Tests/), "#{OUTPUT}/binaries"
+    FileUtils.cp_r FileList["src/**/#{CONFIGURATION}/*.dll", "src/**/#{CONFIGURATION}/*.pdb"].exclude(/obj\//).exclude(/.Tests/), "#{OUTPUT}/binaries"
 end
 
 task :xunit => :compile do
@@ -77,7 +77,7 @@ end
 desc "Generates NuGet packages for each project that contains a nuspec"
 task :nuget_package => [:publish] do
     Dir.mkdir("#{OUTPUT}/nuget")
-    nuspecs = FileList["src/Nancy.Serialization.ServiceStack/*.nuspec"]
+    nuspecs = FileList["src/**/*.nuspec"]
     root = File.dirname(__FILE__)
 
     # Copy all project *.nuspec to nuget build folder before editing
