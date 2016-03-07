@@ -77,7 +77,7 @@ end
 desc "Generates NuGet packages for each project that contains a nuspec"
 task :nuget_package => [:publish] do
     Dir.mkdir("#{OUTPUT}/nuget")
-    nuspecs = FileList["src/**/*.nuspec"]
+    nuspecs = FileList["src/Nancy.Serialization.ServiceStack/*.nuspec"]
     root = File.dirname(__FILE__)
 
     # Copy all project *.nuspec to nuget build folder before editing
