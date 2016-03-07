@@ -5,7 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using global::ServiceStack.Text;
+    using ServiceStack = global::ServiceStack.Text;
     using ModelBinding;
     using Responses.Negotiation;
 
@@ -31,7 +31,7 @@
         /// <returns>Model instance</returns>
         public object Deserialize(MediaRange mediaRange, Stream bodyStream, BindingContext context)
         {
-            var deserializedObject = JsonSerializer.DeserializeFromStream(context.DestinationType, bodyStream);
+            var deserializedObject = ServiceStack.JsonSerializer.DeserializeFromStream(context.DestinationType, bodyStream);
             if (deserializedObject == null)
             {
                 return null;
@@ -39,7 +39,7 @@
 
             IEnumerable<BindingMemberInfo> properties;
             IEnumerable<BindingMemberInfo> fields;
-
+            
             if (context.DestinationType.IsGenericType())
             {
                 var genericType = context.DestinationType.GetGenericArguments().FirstOrDefault();

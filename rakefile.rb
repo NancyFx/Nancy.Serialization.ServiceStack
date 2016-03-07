@@ -8,7 +8,7 @@ NANCY_VERSION = ""
 OUTPUT = "build"
 CONFIGURATION = 'Release'
 SHARED_ASSEMBLY_INFO = 'dependencies/Nancy/SharedAssemblyInfo.cs'
-SOLUTION_FILE = 'src/Nancy.Serialization.ServiceStack/Nancy.Serialization.ServiceStack.sln'
+SOLUTION_FILE = 'Nancy.Serialization.ServiceStack.sln'
 
 Albacore.configure do |config|
     config.log_level = :verbose
@@ -22,6 +22,7 @@ task :default => [:clean, :version, :compile, :publish, :package]
 #Add the folders that should be cleaned as part of the clean task
 CLEAN.include(OUTPUT)
 CLEAN.include(FileList["src/**/#{CONFIGURATION}"])
+CLEAN.include(FileList["test/**/#{CONFIGURATION}"])
 
 desc "Update shared assemblyinfo file for the build"
 assemblyinfo :version => [:clean] do |asm|
@@ -76,7 +77,7 @@ end
 desc "Generates NuGet packages for each project that contains a nuspec"
 task :nuget_package => [:publish] do
     Dir.mkdir("#{OUTPUT}/nuget")
-    nuspecs = FileList["src/Nancy.Serialization.ServiceStack/Nancy.Serialization.ServiceStack/*.nuspec"]
+    nuspecs = FileList["src/Nancy.Serialization.ServiceStack/*.nuspec"]
     root = File.dirname(__FILE__)
 
     # Copy all project *.nuspec to nuget build folder before editing
