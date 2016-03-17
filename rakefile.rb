@@ -17,7 +17,7 @@ Albacore.configure do |config|
 end
 
 desc "Compiles solution and runs unit tests"
-task :default => [:clean, :version, :compile, :publish, :package]
+task :default => [:clean, :version, :nuget_restore, :compile, :publish, :package]
 
 #Add the folders that should be cleaned as part of the clean task
 CLEAN.include(OUTPUT)
@@ -35,6 +35,12 @@ assemblyinfo :version => [:clean] do |asm|
     asm.description = "Provides JSON (de)serialization support using ServiceStack.Text."
     asm.copyright = "Copyright (C) Andreas Hakansson, Steven Robbins and contributors"
     asm.output_file = SHARED_ASSEMBLY_INFO
+end
+
+desc "Restore NuGet packages"
+exec :nuget_restore do |cmd|
+   cmd.command = "dependencies/Nancy/tools/nuget/NuGet.exe"
+   cmd.parameters = ["restore #{SOLUTION_FILE}"]
 end
 
 desc "Compile solution file"
