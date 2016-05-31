@@ -39,8 +39,8 @@
 
             IEnumerable<BindingMemberInfo> properties;
             IEnumerable<BindingMemberInfo> fields;
-            
-            if (context.DestinationType.IsGenericType())
+
+            if (context.DestinationType.IsGenericType)
             {
                 var genericType = context.DestinationType.GetGenericArguments().FirstOrDefault();
 
