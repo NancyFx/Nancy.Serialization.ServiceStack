@@ -31,6 +31,11 @@
         /// <returns>Model instance</returns>
         public object Deserialize(MediaRange mediaRange, Stream bodyStream, BindingContext context)
         {
+            if (bodyStream.CanSeek)
+            {
+                bodyStream.Position = 0;
+            }
+
             var deserializedObject = ServiceStack.JsonSerializer.DeserializeFromStream(context.DestinationType, bodyStream);
             if (deserializedObject == null)
             {
