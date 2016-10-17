@@ -16,7 +16,7 @@ var configuration = IsRunningOnWindows() ? "Release" : "MonoRelease";
 var output = Directory("build");
 var outputBinaries = output + Directory("binaries");
 var outputBinariesNet452 = outputBinaries + Directory("net452");
-var outputBinariesNetstandard = outputBinaries + Directory("netstandard1.5");
+var outputBinariesNetstandard = outputBinaries + Directory("netstandard1.6");
 var outputPackages = output + Directory("packages");
 var outputNuGet = output + Directory("nuget");
 var xunit = "test/Nancy.Serialization.ServiceStack.Tests/bin/"+configuration+"/net452/unix-x64/dotnet-test-xunit.exe";
@@ -52,7 +52,7 @@ Task("Update-Version")
 
   System.IO.File.WriteAllText(file.FullPath, project, Encoding.UTF8);
 });
-      
+
 
 Task("Restore-NuGet-Packages")
   .Description("Restores NuGet packages")
