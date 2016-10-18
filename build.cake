@@ -105,10 +105,10 @@ Task("Publish")
     + GetFiles("src/**/bin/" + configuration + "/net452/*.pdb")
     + GetFiles("src/**/*.ps1"), outputBinariesNet452);
 
-  // Copy netstandard1.5 binaries.
-  CopyFiles(GetFiles("src/**/bin/" + configuration + "/netstandard1.5/*.dll")
-    + GetFiles("src/**/bin/" + configuration + "/netstandard1.5/*.xml")
-    + GetFiles("src/**/bin/" + configuration + "/netstandard1.5/*.pdb")
+  // Copy netstandard binaries.
+  CopyFiles(GetFiles("src/**/bin/" + configuration + "/netstandard1.6/*.dll")
+    + GetFiles("src/**/bin/" + configuration + "/netstandard1.6/*.xml")
+    + GetFiles("src/**/bin/" + configuration + "/netstandard1.6/*.pdb")
     + GetFiles("src/**/*.ps1"), outputBinariesNetstandard);
 
 });
