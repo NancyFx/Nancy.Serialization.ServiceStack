@@ -7,7 +7,7 @@ using System.Xml.XPath;
 var target = Argument<string>("target", "Default");
 var source = Argument<string>("source", null);
 var apiKey = Argument<string>("apikey", null);
-var version = GetNancyVersion(new FilePath("dependencies/Nancy/src/Nancy/project.json"));
+var version = target.ToLower() == "default" ? "2.0.0-Pre" + (EnvironmentVariable("APPVEYOR_BUILD_NUMBER") ?? "0") : GetNancyVersion(new FilePath("dependencies/Nancy/src/Nancy/project.json"));
 
 // Variables
 var configuration = IsRunningOnWindows() ? "Release" : "MonoRelease";
@@ -19,7 +19,7 @@ var outputBinariesNet452 = outputBinaries + Directory("net452");
 var outputBinariesNetstandard = outputBinaries + Directory("netstandard1.6");
 var outputPackages = output + Directory("packages");
 var outputNuGet = output + Directory("nuget");
-var xunit = "test/Nancy.Serialization.ServiceStack.Tests/bin/"+configuration+"/net452/unix-x64/dotnet-test-xunit.exe";
+
 
 ///////////////////////////////////////////////////////////////
 
@@ -34,7 +34,6 @@ Task("Clean")
 
   // Clean output directories.
   CleanDirectories("./src/**/" + configuration);
- // CleanDirectories("./test/**/" + configuration);
 });
 
 Task("Update-Version")
@@ -167,13 +166,7 @@ Task("Publish-NuGet")
     });
   }
 });
-Task("Test")
-  .Description("Executes xUnit tests")
-  .IsDependentOn("Compile")
-  .Does(() =>
-{
-  Information("No tests");
-});
+
 ///////////////////////////////////////////////////////////////
 
 public string GetNancyVersion(FilePath filePath)
@@ -184,7 +177,7 @@ public string GetNancyVersion(FilePath filePath)
 
 Task("Default")
   .IsDependentOn("Compile")
-  .IsDependentOn("Package");
+  .IsDependentOn("Package-Nuget");
 
 Task("Mono")
   .IsDependentOn("Compile");
