@@ -8,6 +8,7 @@ var target = Argument<string>("target", "Default");
 var source = Argument<string>("source", null);
 var apiKey = Argument<string>("apikey", null);
 var version = target.ToLower() == "default" ? "2.0.0-Pre" + (EnvironmentVariable("APPVEYOR_BUILD_NUMBER") ?? "0") : GetNancyVersion(new FilePath("dependencies/Nancy/src/Nancy/project.json"));
+var skipTests = Argument<bool>("skiptests", false);
 
 // Variables
 var configuration = IsRunningOnWindows() ? "Release" : "MonoRelease";
@@ -52,7 +53,6 @@ Task("Update-Version")
 
   System.IO.File.WriteAllText(file.FullPath, project, Encoding.UTF8);
 });
-
 
 Task("Restore-NuGet-Packages")
   .Description("Restores NuGet packages")
@@ -165,6 +165,15 @@ Task("Publish-NuGet")
       ApiKey = apiKey
     });
   }
+});
+
+Task("Test")
+  .Description("Executes xUnit tests")
+  .WithCriteria(!skipTests)
+  .IsDependentOn("Compile")
+  .Does(() =>
+{
+  // No tests to run.
 });
 
 ///////////////////////////////////////////////////////////////
