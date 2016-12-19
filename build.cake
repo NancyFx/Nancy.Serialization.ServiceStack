@@ -169,41 +169,7 @@ Task("Test")
     .IsDependentOn("Compile")
     .Does(() =>
     {
-        if (IsRunningOnWindows())
-        {
-            var projects =
-                GetFiles("./test/**/*.xproj");
-
-            foreach(var project in projects)
-            {
-                DotNetCoreTest(project.GetDirectory().FullPath, new DotNetCoreTestSettings {
-                    Configuration = configuration
-                });
-            }
-        }
-        else
-        {
-            // For when test projects are set to run against netstandard
-
-            // DotNetCoreTest(project.GetDirectory().FullPath, new DotNetCoreTestSettings {
-            //   Configuration = configuration,
-            //   Framework = "netstandard1.6",
-            //   Runtime = "unix-64"
-            // });
-
-            var settings = new ProcessSettings {
-                Arguments = xunit + " " + "test/Nancy.Serialization.ServiceStack.Tests/bin/"+configuration+"/net452/unix-x64/Nancy.Serialization.ServiceStack.Tests.dll"
-            };
-
-            using(var process = StartAndReturnProcess("mono", settings))
-            {
-                process.WaitForExit();
-                if(process.GetExitCode() != 0)
-                {
-                    throw new Exception("Nancy.Serialization.ServiceStack.Tests failed.");
-                }
-            }
-        }
+        // No tests to run at the moment.
     });
 
 Task("Update-Version")
